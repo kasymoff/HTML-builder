@@ -1,9 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 
-const path = __dirname + '\\text.txt';
+const filePath = path.join(__dirname, 'text.txt');
 
-const reader = fs.createReadStream(path);
-
-reader.on('data', (chunk) => {
+fs.createReadStream(filePath).on('data', (chunk) => {
   console.log(chunk.toString());
 });
