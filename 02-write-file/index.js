@@ -14,11 +14,15 @@ fs.unlink(filePath, err => {
   if (err) null;
 });
 
+fs.writeFile(filePath, '', err => {
+  if (err) null;
+});
+
 console.log(chalk.blue('Please enter your text below:'));
 
 rl.on('line', (chunk) => {
   if (chunk === 'exit') {
-    console.log(chalk.red('\nBYE BYE !!!'));
+    console.log(chalk.red('\nBye Bye !!!'));
     process.exit(0);
   }
   fs.writeFile(filePath, chunk + '\n', { flag: 'a' }, err => {
@@ -27,6 +31,6 @@ rl.on('line', (chunk) => {
 });
 
 rl.on('close', function () {
-  console.log(chalk.red('\nBYE BYE !!!'));
+  console.log(chalk.red('\nBye Bye !!!'));
   process.exit(0);
 });
