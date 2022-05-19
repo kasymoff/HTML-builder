@@ -1,23 +1,50 @@
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 
 const folderPath = path.join(__dirname, 'files');
 const copyFolderPath = path.join(__dirname, 'files-copy');
 
-fs.mkdir(copyFolderPath, err => {
-  if (err) null;
-});
-
-fs.readdir(copyFolderPath, (err, files) => {
-  if (err) null;
-  files.map(file => fs.unlink(path.join(copyFolderPath, file), err => err ? null : null));
-});
-
-fs.readdir(folderPath, (err, files) => {
-  if (err) null;
-  files.map(file => {
-    fs.copyFile(path.join(folderPath, file), path.join(copyFolderPath, file), err => {
-      if (err) null;
+async function copyDir(src, dest) {
+  try {
+    fs.promises.rm(dest, { recursive: true, force: true }, (err) => {
+      if (err) return err;
+    }).then(() => {
+      fs.mkdir(dest, (err) => {
+        if (err) return err;
+      });
+    }).then(() => {
+      fs.readdir(src, (err, files) => {
+        if (err) return err;
+        files.forEach((file) => {
+          const srcFile = path.join(src, file);
+          const destFile = path.join(dest, file);
+          fs.stat(srcFile, (err, stats) => {
+            if (err) return err;
+            if (stats.isDirectory()) {
+              copyDir(srcFile, destFile);
+            } else {
+              fs.copyFile(srcFile, destFile, (err) => {
+                if (err) return err;
+              });
+            }
+          });
+        });
+      });
     });
-  });
-});
+  } catch (err) {
+    return err;
+  }
+}
+
+const copyFolder = (source, target) => {
+  try {
+    copyDir(source, target);
+    console.log(chalk.green('Copy folder success'));
+  } catch (err) {
+    console.log(chalk.red('Copy folder fail'));
+    console.log(chalk.red(err));
+  }
+};
+
+copyFolder(folderPath, copyFolderPath);
