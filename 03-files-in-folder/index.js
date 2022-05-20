@@ -11,7 +11,7 @@ fs.readdir(folderPath, (err, files) => {
       if (err) {
         console.log(err);
       } else {
-        if (stats.isFile()) console.log(path.parse(file).name + ' - ' +path.extname(file) + ' - ' + stats.size/1000 + 'kB');
+        if (stats.isFile()) console.log(path.parse(file).name + ' - ' + path.extname(file).slice(1) + ' - ' + (stats.size/1024).toFixed(3) + ' KB');
       }
     });
   });

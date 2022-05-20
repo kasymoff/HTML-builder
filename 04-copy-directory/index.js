@@ -5,27 +5,27 @@ const chalk = require('chalk');
 const folderPath = path.join(__dirname, 'files');
 const copyFolderPath = path.join(__dirname, 'files-copy');
 
-async function copyDir(src, dest) {
+function copyDir(src, dest) {
   try {
     fs.promises.rm(dest, { recursive: true, force: true }, (err) => {
-      if (err) return err;
+      if (err) throw err;
     }).then(() => {
       fs.mkdir(dest, (err) => {
-        if (err) return err;
+        if (err) throw err;
       });
     }).then(() => {
       fs.readdir(src, (err, files) => {
-        if (err) return err;
+        if (err) throw err;
         files.forEach((file) => {
           const srcFile = path.join(src, file);
           const destFile = path.join(dest, file);
           fs.stat(srcFile, (err, stats) => {
-            if (err) return err;
+            if (err) throw err;
             if (stats.isDirectory()) {
               copyDir(srcFile, destFile);
             } else {
               fs.copyFile(srcFile, destFile, (err) => {
-                if (err) return err;
+                if (err) throw err;
               });
             }
           });
