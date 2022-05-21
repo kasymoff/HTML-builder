@@ -20,7 +20,7 @@ const distPath = path.join(__dirname, 'project-dist', 'bundle.css');
           if (stats.isFile() && path.extname(file) === '.css') {
             fs.readFile(currentPath, (err, data) => {
               if (err) console.log(err);
-              fs.appendFile(distPath, data, err => {
+              fs.appendFile(distPath, data + '\n\n', err => {
                 if (err) console.log(err);
               });
             });

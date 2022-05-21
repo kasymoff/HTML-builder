@@ -59,7 +59,7 @@ async function createStyles() {
         if (stats.isFile() && path.extname(file) === '.css') {
           fs.readFile(currentPath, (err, data) => {
             if (err) console.log(err);
-            fs.appendFile(stylesDist, data, err => {
+            fs.appendFile(stylesDist, data + '\n\n', err => {
               if (err) console.log(err);
             });
           });
