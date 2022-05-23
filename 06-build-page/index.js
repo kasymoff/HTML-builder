@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const chalk = require('chalk');
 
 const projectDist = path.join(__dirname, 'project-dist');
 const templatePath = path.join(__dirname, 'template.html');
@@ -19,7 +18,7 @@ async function createFolder(dest) {
       });
     });
   } catch (err) {
-    console.log(chalk.red(err));
+    console.log(err);
   }
 }
 
@@ -107,8 +106,8 @@ async function copyDir(src, dest) {
     await createIndex();
     await createStyles();
     await copyDir(assetsPath, projectDistAssets);
-    console.log(chalk.green('Build complete!'));
+    console.log('Build complete!');
   } catch (err){
-    console.log(chalk.red('Build failed!'), err);
+    console.log('Build failed!', err);
   }
 })();

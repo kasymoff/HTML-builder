@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const chalk = require('chalk');
 
 const stylesPath = path.join(__dirname, 'styles');
 const distPath = path.join(__dirname, 'project-dist', 'bundle.css');
@@ -29,8 +28,8 @@ const distPath = path.join(__dirname, 'project-dist', 'bundle.css');
       });
     });
 
-    console.log(chalk.green('Styles created successfully!'));
+    console.log('Styles created successfully!');
   } catch (err) {
-    console.log(chalk.red('Error creating styles: ' + err));
+    console.log('Error creating styles: ' + err);
   }
 })();

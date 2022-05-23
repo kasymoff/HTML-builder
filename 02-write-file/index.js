@@ -1,7 +1,6 @@
 const fs = require('fs');
 const readline = require('readline');
 const path = require('path');
-const chalk = require('chalk');
 
 const filePath = path.join(__dirname, 'text.txt');
 
@@ -18,11 +17,11 @@ fs.writeFile(filePath, '', err => {
   if (err) null;
 });
 
-console.log(chalk.blue('Please enter your text below:'));
+console.log('Please enter your text below:');
 
 rl.on('line', (chunk) => {
   if (chunk === 'exit') {
-    console.log(chalk.red('\nBye Bye !!!'));
+    console.log('\nBye Bye !!!');
     process.exit(0);
   }
   fs.writeFile(filePath, chunk + '\n', { flag: 'a' }, err => {
@@ -31,6 +30,6 @@ rl.on('line', (chunk) => {
 });
 
 rl.on('close', function () {
-  console.log(chalk.red('\nBye Bye !!!'));
+  console.log('\nBye Bye !!!');
   process.exit(0);
 });
